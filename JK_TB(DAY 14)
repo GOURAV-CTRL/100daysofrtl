@@ -1,0 +1,49 @@
+module jk_tb();
+
+logic clk,rst,j,k,q,qb;
+
+jk_ff dut(clk,rst,j,k,q,qb);
+
+task initialize();
+	begin
+		rst = 0;
+		clk = 0;
+		j = 0;
+		k = 0;
+	end
+endtask
+
+always #10 clk = ~clk;
+
+task reset();
+	begin	
+		@(negedge clk)
+			rst = 1;
+		@(negedge clk)
+			rst = 0;
+	end
+endtask
+
+task load(input m,input n);
+	begin
+		j = m;
+		k = n;
+	end
+endtask
+
+initial
+	begin
+		initialize();
+		reset();
+		#10;
+		load(0,0);
+		#10;
+		load(0,1)
+		#10;
+		load(1,0);
+		#500 $finish;
+		
+	end
+endmodule
+
+		
