@@ -1,0 +1,31 @@
+module freq_div_1_5_tb();
+reg clk,rst;
+wire clk_out;
+
+freq_div_1_5 dut(clk,rst,clk_out);
+
+initial
+	begin
+		{clk,rst} = 0;
+	end
+
+always #20 clk = ~clk;
+
+
+initial
+	begin
+		@(negedge clk)
+			rst = 1;
+		@(negedge clk)
+			rst = 0;
+	end
+
+
+initial
+	begin
+		#100 $finish;
+	end
+
+endmodule
+
+

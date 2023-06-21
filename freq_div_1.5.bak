@@ -1,0 +1,39 @@
+module freq_div_1_5(input clk,rst,output clk_out);
+
+reg [1:0]count;
+reg enb_1,enb_2;
+
+always@(posedge clk)
+	begin
+		if(rst)
+			count <= 0;
+			enb_1 <= 0;
+		else 
+			count <= count+1;
+		
+		else if(count == 0 || count == 1)
+			enb_1 <= 1;
+		
+		else 
+			enb_1 <= 0;
+	end
+
+always@(negedge clk)
+	begin
+		if(rst)
+			enb_2 <= 0;
+		else if(count == 2 || count == 3)
+		enb_2 <= 1;
+		
+		else
+			enb_2 <= 0;
+end
+
+assign clk_out = enb_1 | enb_2;
+
+endmodule
+
+		
+		
+		
+	
